@@ -6,48 +6,64 @@
 
     <title>KokokAyam | HTML5 Games</title>
 
-    <meta name="description" content="Explore HTML5 games created by KokokAyam. Play games online and discover new projects.">
+    <meta name="description" content="KokokAyam HTML5 Games - Play and explore browser games created with Construct 3.">
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: Arial, Helvetica, sans-serif;
             background: #111827;
-            color: #ffffff;
+            color: white;
         }
 
-        /* HEADER */
+        /* =========================
+           HEADER
+        ========================= */
+
         header {
-            background: #0b1120;
-            border-bottom: 1px solid #273244;
-            padding: 20px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: #0b1120;
+            border-bottom: 1px solid #263244;
         }
 
         .logo {
             font-size: 25px;
             font-weight: bold;
-            letter-spacing: 1px;
         }
 
-        .logo span {
+        .logo-yellow {
             color: #facc15;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
         }
 
         nav a {
             color: #d1d5db;
             text-decoration: none;
-            margin-left: 25px;
             font-size: 15px;
         }
 
@@ -55,25 +71,38 @@
             color: #facc15;
         }
 
-        /* HERO */
+
+        /* =========================
+           HERO
+        ========================= */
+
         .hero {
-            min-height: 520px;
+            min-height: 540px;
+
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+
             text-align: center;
+
             padding: 80px 20px;
+
             background:
-                radial-gradient(circle at center, #263449 0%, #111827 60%);
+                radial-gradient(
+                    circle at center,
+                    #263449 0%,
+                    #111827 65%
+                );
         }
 
         .hero-content {
-            max-width: 850px;
+            max-width: 900px;
         }
 
         .hero h1 {
             font-size: clamp(42px, 7vw, 76px);
-            margin-bottom: 20px;
+            line-height: 1.1;
+            margin-bottom: 25px;
         }
 
         .hero h1 span {
@@ -89,25 +118,36 @@
 
         .hero-button {
             display: inline-block;
-            padding: 15px 30px;
+
+            padding: 16px 32px;
+
             background: #facc15;
             color: #111827;
+
             text-decoration: none;
+
             border-radius: 8px;
+
             font-weight: bold;
+
             transition: 0.2s;
         }
 
         .hero-button:hover {
-            transform: translateY(-3px);
             background: #fde047;
+            transform: translateY(-3px);
         }
 
-        /* GAMES */
+
+        /* =========================
+           GAMES SECTION
+        ========================= */
+
         .games-section {
-            padding: 80px 6%;
             max-width: 1400px;
             margin: auto;
+
+            padding: 90px 6%;
         }
 
         .section-title {
@@ -116,43 +156,75 @@
         }
 
         .section-title h2 {
-            font-size: 38px;
+            font-size: 40px;
             margin-bottom: 12px;
         }
 
         .section-title p {
             color: #94a3b8;
+            font-size: 17px;
         }
+
+
+        /* =========================
+           GAME GRID
+        ========================= */
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
             gap: 30px;
         }
 
-        /* GAME CARD */
+
+        /* =========================
+           GAME CARD
+        ========================= */
+
         .game-card {
             background: #1e293b;
-            border-radius: 12px;
-            overflow: hidden;
+
             border: 1px solid #334155;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
             transition: 0.25s;
         }
 
         .game-card:hover {
             transform: translateY(-8px);
+
             border-color: #facc15;
         }
 
+
+        /* GAME IMAGE */
+
         .game-image {
-            height: 210px;
+            width: 100%;
+            aspect-ratio: 590 / 300;
+
             background: #334155;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #94a3b8;
-            font-size: 18px;
+
+            overflow: hidden;
         }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+
+        /* GAME INFORMATION */
 
         .game-info {
             padding: 22px;
@@ -165,24 +237,38 @@
 
         .game-info p {
             color: #94a3b8;
+
             line-height: 1.6;
+
             min-height: 52px;
         }
 
+
+        /* BUTTONS */
+
         .game-buttons {
-            margin-top: 20px;
             display: flex;
+
             gap: 10px;
+
+            margin-top: 20px;
         }
 
         .play-button,
         .buy-button {
+
             flex: 1;
+
+            padding: 12px;
+
             text-align: center;
-            padding: 11px;
-            border-radius: 6px;
+
             text-decoration: none;
+
+            border-radius: 6px;
+
             font-weight: bold;
+
             font-size: 14px;
         }
 
@@ -191,102 +277,166 @@
             color: #111827;
         }
 
-        .buy-button {
-            background: #334155;
-            color: #ffffff;
-        }
-
         .play-button:hover {
             background: #fde047;
+        }
+
+        .buy-button {
+            background: #334155;
+            color: white;
         }
 
         .buy-button:hover {
             background: #475569;
         }
 
-        /* ABOUT */
+
+        /* =========================
+           ABOUT
+        ========================= */
+
         .about {
             background: #0b1120;
-            padding: 80px 20px;
+
+            padding: 90px 20px;
+
             text-align: center;
         }
 
         .about-content {
-            max-width: 750px;
+            max-width: 800px;
             margin: auto;
         }
 
         .about h2 {
-            font-size: 36px;
+            font-size: 38px;
             margin-bottom: 20px;
         }
 
         .about p {
             color: #94a3b8;
-            line-height: 1.8;
+
             font-size: 17px;
+
+            line-height: 1.8;
         }
 
-        /* FOOTER */
+
+        /* =========================
+           FOOTER
+        ========================= */
+
         footer {
             padding: 30px;
+
             text-align: center;
+
             color: #64748b;
+
             font-size: 14px;
         }
 
-        /* MOBILE */
-        @media (max-width: 800px) {
 
-            header {
-                padding: 18px 5%;
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .games-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
-            nav a {
-                margin-left: 12px;
-                font-size: 13px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            header {
+                height: auto;
+
+                padding: 18px 5%;
+
+                flex-direction: column;
+
+                gap: 15px;
+            }
+
+            nav {
+                gap: 18px;
+            }
+
+            .hero {
+                min-height: 470px;
+            }
+
+            .hero p {
+                font-size: 17px;
             }
 
             .games-grid {
                 grid-template-columns: 1fr;
             }
 
-            .hero {
-                min-height: 450px;
+            .games-section {
+                padding: 70px 5%;
             }
 
-            .hero p {
-                font-size: 17px;
-            }
         }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- HEADER -->
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
     <header>
 
         <div class="logo">
-            Kokok<span>Ayam</span>
+            Kokok<span class="logo-yellow">Ayam</span>
         </div>
 
         <nav>
-            <a href="#home">Home</a>
-            <a href="#games">Games</a>
-            <a href="#about">About</a>
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#games">
+                Games
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
         </nav>
 
     </header>
 
 
-    <!-- HERO -->
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
     <section class="hero" id="home">
 
         <div class="hero-content">
 
             <h1>
-                HTML5 Games by <span>KokokAyam</span>
+                HTML5 Games by
+                <span>KokokAyam</span>
             </h1>
 
             <p>
@@ -294,7 +444,10 @@
                 created with passion using Construct 3.
             </p>
 
-            <a href="#games" class="hero-button">
+            <a
+                href="#games"
+                class="hero-button"
+            >
                 EXPLORE GAMES
             </a>
 
@@ -303,12 +456,21 @@
     </section>
 
 
-    <!-- GAMES -->
-    <section class="games-section" id="games">
+
+    <!-- =========================
+         GAMES
+    ========================= -->
+
+    <section
+        class="games-section"
+        id="games"
+    >
 
         <div class="section-title">
 
-            <h2>Featured Games</h2>
+            <h2>
+                Featured Games
+            </h2>
 
             <p>
                 Play my games directly in your browser.
@@ -317,31 +479,52 @@
         </div>
 
 
+
         <div class="games-grid">
 
 
-            <!-- ORBITO -->
+            <!-- =====================
+                 PUSHOUT MAHJONG
+            ====================== -->
+
             <div class="game-card">
 
                 <div class="game-image">
-                    ORBITO PREVIEW
+
+                    <img
+                        src="coverPushoutMahjong.png"
+                        alt="Pushout Mahjong"
+                    >
+
                 </div>
+
 
                 <div class="game-info">
 
-                    <h3>Orbito</h3>
+                    <h3>
+                        Pushout Mahjong
+                    </h3>
 
                     <p>
-                        A strategic board game for HTML5.
+                        A strategic and challenging
+                        Mahjong board game.
                     </p>
+
 
                     <div class="game-buttons">
 
-                        <a href="#" class="play-button">
+                        <a
+                            href="#"
+                            class="play-button"
+                        >
                             PLAY LIVE
                         </a>
 
-                        <a href="#" class="buy-button">
+
+                        <a
+                            href="#"
+                            class="buy-button"
+                        >
                             BUY
                         </a>
 
@@ -352,28 +535,57 @@
             </div>
 
 
-            <!-- ANIMAL DOMINO -->
+
+            <!-- =====================
+                 ANIMAL DOMINO
+            ====================== -->
+
             <div class="game-card">
 
                 <div class="game-image">
-                    DOMINO PREVIEW
+
+                    <div
+                        style="
+                            height:100%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            color:#94a3b8;
+                            font-size:18px;
+                        "
+                    >
+                        ANIMAL DOMINO
+                    </div>
+
                 </div>
+
 
                 <div class="game-info">
 
-                    <h3>Animal Domino</h3>
+                    <h3>
+                        Animal Domino
+                    </h3>
 
                     <p>
-                        Fun animal-themed domino game.
+                        Fun animal-themed domino
+                        game for HTML5.
                     </p>
+
 
                     <div class="game-buttons">
 
-                        <a href="#" class="play-button">
+                        <a
+                            href="#"
+                            class="play-button"
+                        >
                             PLAY LIVE
                         </a>
 
-                        <a href="#" class="buy-button">
+
+                        <a
+                            href="#"
+                            class="buy-button"
+                        >
                             BUY
                         </a>
 
@@ -384,28 +596,57 @@
             </div>
 
 
-            <!-- KUARTET -->
+
+            <!-- =====================
+                 KUARTET
+            ====================== -->
+
             <div class="game-card">
 
                 <div class="game-image">
-                    KUARTET PREVIEW
+
+                    <div
+                        style="
+                            height:100%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            color:#94a3b8;
+                            font-size:18px;
+                        "
+                    >
+                        KUARTET
+                    </div>
+
                 </div>
+
 
                 <div class="game-info">
 
-                    <h3>Kuartet</h3>
+                    <h3>
+                        Kuartet
+                    </h3>
 
                     <p>
-                        Collect four matching animal cards.
+                        Collect four matching
+                        animal cards.
                     </p>
+
 
                     <div class="game-buttons">
 
-                        <a href="#" class="play-button">
+                        <a
+                            href="#"
+                            class="play-button"
+                        >
                             PLAY LIVE
                         </a>
 
-                        <a href="#" class="buy-button">
+
+                        <a
+                            href="#"
+                            class="buy-button"
+                        >
                             BUY
                         </a>
 
@@ -421,12 +662,21 @@
     </section>
 
 
-    <!-- ABOUT -->
-    <section class="about" id="about">
+
+    <!-- =========================
+         ABOUT
+    ========================= -->
+
+    <section
+        class="about"
+        id="about"
+    >
 
         <div class="about-content">
 
-            <h2>About KokokAyam</h2>
+            <h2>
+                About KokokAyam
+            </h2>
 
             <p>
                 KokokAyam is an independent game developer
@@ -439,12 +689,18 @@
     </section>
 
 
-    <!-- FOOTER -->
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
     <footer>
 
-        © 2026 KokokAyam. All rights reserved.
+        © 2026 KokokAyam.
+        All rights reserved.
 
     </footer>
+
 
 </body>
 </html>
