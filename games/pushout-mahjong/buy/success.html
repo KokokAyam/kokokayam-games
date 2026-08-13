@@ -2,678 +2,230 @@
 <html lang="id">
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Buy Pushout Mahjong</title>
+<title>Payment Successful - Pushout Mahjong</title>
 
+<style>
 
-    <!--
-    ============================================================
-    MIDTRANS SNAP SANDBOX
-    ============================================================
+* {
+    box-sizing: border-box;
+}
 
-    GANTI:
-    YOUR_MIDTRANS_CLIENT_KEY
+body {
+    margin: 0;
+    min-height: 100vh;
 
-    dengan Client Key Sandbox Midtrans kamu.
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    JANGAN masukkan Server Key di sini.
-    ============================================================
-    -->
+    font-family: Arial, Helvetica, sans-serif;
 
-    <script
-        src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="YOUR_MIDTRANS_CLIENT_KEY">
-    </script>
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #1e293b,
+            #0f172a
+        );
 
+    color: white;
+}
 
-    <style>
+.card {
 
-        * {
-            box-sizing: border-box;
-        }
+    width: 90%;
+    max-width: 520px;
 
+    padding: 40px 25px;
 
-        body {
+    text-align: center;
 
-            margin: 0;
+    border-radius: 20px;
 
-            min-height: 100vh;
+    background:
+        rgba(255,255,255,0.08);
 
-            display: flex;
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
 
-            justify-content: center;
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.35);
+}
 
-            align-items: center;
+.success {
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    width: 80px;
+    height: 80px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #111827,
-                    #1e293b,
-                    #0f172a
-                );
+    margin:
+        0 auto 25px;
 
-            color: white;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+    border-radius: 50%;
 
-        .container {
+    background: #22c55e;
 
-            width: 100%;
+    font-size: 45px;
+    font-weight: bold;
+}
 
-            max-width: 520px;
+h1 {
 
-            padding: 25px;
-        }
+    margin:
+        0 0 15px;
 
+    font-size: 30px;
+}
 
-        .payment-card {
+.game {
 
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.08
-                );
+    font-size: 22px;
 
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.15
-                );
+    font-weight: bold;
 
-            border-radius: 20px;
+    margin:
+        25px 0;
+}
 
-            padding: 35px 25px;
+.message {
 
-            text-align: center;
+    color: #cbd5e1;
 
-            box-shadow:
-                0 20px 50px
-                rgba(
-                    0,
-                    0,
-                    0,
-                    0.35
-                );
+    line-height: 1.6;
+}
 
-            backdrop-filter: blur(10px);
-        }
+.download {
 
+    display: block;
 
-        .game-title {
+    margin-top: 30px;
 
-            font-size: 34px;
+    padding: 16px;
 
-            font-weight: bold;
+    border-radius: 12px;
 
-            margin-bottom: 10px;
-        }
+    background: #22c55e;
 
+    color: white;
 
-        .subtitle {
+    text-decoration: none;
 
-            font-size: 16px;
+    font-size: 18px;
 
-            color: #cbd5e1;
+    font-weight: bold;
+}
 
-            margin-bottom: 30px;
-        }
+.download:hover {
 
+    opacity: 0.9;
+}
 
-        .price-label {
+.warning {
 
-            font-size: 14px;
+    margin-top: 20px;
 
-            color: #cbd5e1;
+    color: #94a3b8;
 
-            margin-bottom: 5px;
-        }
+    font-size: 13px;
 
+    line-height: 1.5;
+}
 
-        .price {
+.back {
 
-            font-size: 36px;
+    display: inline-block;
 
-            font-weight: bold;
+    margin-top: 20px;
 
-            margin-bottom: 30px;
-        }
+    color: #94a3b8;
 
+    text-decoration: none;
 
-        .buy-button {
+}
 
-            width: 100%;
-
-            border: none;
-
-            padding: 16px 20px;
-
-            border-radius: 12px;
-
-            background: #22c55e;
-
-            color: white;
-
-            font-size: 18px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.2s,
-                opacity 0.2s;
-        }
-
-
-        .buy-button:hover {
-
-            transform:
-                translateY(-2px);
-
-            opacity: 0.9;
-        }
-
-
-        .buy-button:disabled {
-
-            cursor: not-allowed;
-
-            opacity: 0.6;
-
-            transform: none;
-        }
-
-
-        .status {
-
-            margin-top: 20px;
-
-            font-size: 14px;
-
-            color: #cbd5e1;
-
-            min-height: 20px;
-        }
-
-
-        .secure-text {
-
-            margin-top: 20px;
-
-            font-size: 13px;
-
-            color: #94a3b8;
-
-            line-height: 1.5;
-        }
-
-
-        .back-button {
-
-            display: inline-block;
-
-            margin-top: 20px;
-
-            color: #94a3b8;
-
-            text-decoration: none;
-
-            font-size: 14px;
-        }
-
-
-        .back-button:hover {
-
-            color: white;
-        }
-
-    </style>
+</style>
 
 </head>
 
-
 <body>
 
+<div class="card">
 
-<div class="container">
+    <div class="success">
+        ✓
+    </div>
 
+    <h1>
+        Pembayaran Berhasil
+    </h1>
 
-    <div class="payment-card">
+    <div class="message">
 
+        Terima kasih telah membeli
+        game kami.
 
-        <div class="game-title">
+        <br><br>
 
-            Pushout Mahjong
-
-        </div>
-
-
-        <div class="subtitle">
-
-            HTML5 Game
-
-        </div>
-
-
-        <div class="price-label">
-
-            Harga
-
-        </div>
-
-
-        <div class="price">
-
-            Rp300.000
-
-        </div>
-
-
-        <button
-            type="button"
-            class="buy-button"
-            id="buyButton"
-        >
-
-            BELI SEKARANG
-
-        </button>
-
-
-        <div
-            class="status"
-            id="status"
-        ></div>
-
-
-        <div class="secure-text">
-
-            Pembayaran diproses melalui Midtrans.
-
-            <br>
-
-            Kamu akan diarahkan ke
-            halaman pembayaran yang aman.
-
-        </div>
-
-
-        <a
-            href="../../"
-            class="back-button"
-        >
-
-            ← Kembali
-
-        </a>
-
+        Pesanan kamu untuk:
 
     </div>
 
+    <div class="game">
+        Pushout Mahjong
+    </div>
+
+    <div class="message">
+
+        Pembayaran telah berhasil
+        diproses.
+
+    </div>
+
+    <!--
+    ============================================================
+    DOWNLOAD
+    ============================================================
+
+    JANGAN masukkan link game asli dulu.
+
+    Kita akan menghubungkan tombol ini
+    dengan sistem verifikasi pembayaran
+    setelahnya.
+    -->
+
+    <a
+        href="#"
+        class="download"
+        onclick="return false;"
+    >
+        DOWNLOAD GAME
+    </a>
+
+    <div class="warning">
+
+        Download akan tersedia setelah
+        sistem memverifikasi pembayaran.
+
+    </div>
+
+    <a
+        href="./"
+        class="back"
+    >
+        ← Kembali ke halaman pembelian
+    </a>
 
 </div>
 
-
-
-<script>
-
-
-/*
-================================================================
-KONFIGURASI
-================================================================
-*/
-
-
-const WORKER_URL =
-    "https://pushout-mahjong-payment.kokokayampagi.workers.dev/";
-
-
-const PRODUCT_NAME =
-    "Pushout Mahjong";
-
-
-const PRODUCT_PRICE =
-    300000;
-
-
-
-/*
-================================================================
-ELEMENT
-================================================================
-*/
-
-
-const buyButton =
-    document.getElementById(
-        "buyButton"
-    );
-
-
-const statusText =
-    document.getElementById(
-        "status"
-    );
-
-
-
-/*
-================================================================
-TOMBOL BELI
-================================================================
-*/
-
-
-buyButton.addEventListener(
-    "click",
-    async function () {
-
-
-        buyButton.disabled =
-            true;
-
-
-        buyButton.textContent =
-            "MEMPROSES...";
-
-
-        statusText.textContent =
-            "Menghubungkan ke sistem pembayaran...";
-
-
-        try {
-
-
-            /*
-            ----------------------------------------------------
-            MEMANGGIL CLOUDFLARE WORKER
-            ----------------------------------------------------
-            */
-
-
-            const response =
-                await fetch(
-                    WORKER_URL,
-                    {
-
-                        method:
-                            "POST",
-
-                        headers:
-                            {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                        body:
-                            JSON.stringify(
-                                {
-
-                                    product:
-                                        PRODUCT_NAME,
-
-                                    amount:
-                                        PRODUCT_PRICE
-
-                                }
-                            )
-
-                    }
-                );
-
-
-
-            /*
-            ----------------------------------------------------
-            RESPONSE
-            ----------------------------------------------------
-            */
-
-
-            const data =
-                await response.json();
-
-
-            console.log(
-                "Worker Response:",
-                data
-            );
-
-
-
-            /*
-            ----------------------------------------------------
-            CEK HTTP
-            ----------------------------------------------------
-            */
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.message ||
-                    data.error ||
-                    "Worker gagal membuat transaksi."
-                );
-
-            }
-
-
-
-            /*
-            ----------------------------------------------------
-            CEK TOKEN
-            ----------------------------------------------------
-            */
-
-
-            if (!data.token) {
-
-                throw new Error(
-                    "Snap Token tidak ditemukan."
-                );
-
-            }
-
-
-
-            /*
-            ----------------------------------------------------
-            BUKA MIDTRANS
-            ----------------------------------------------------
-            */
-
-
-            statusText.textContent =
-                "Membuka pembayaran...";
-
-
-            window.snap.pay(
-                data.token,
-                {
-
-
-                    /*
-                    ============================================
-                    PEMBAYARAN BERHASIL
-                    ============================================
-                    */
-
-
-                    onSuccess:
-                        function(result) {
-
-
-                            console.log(
-                                "SUCCESS:",
-                                result
-                            );
-
-
-                            /*
-                            ------------------------------------
-                            LANGSUNG KE SUCCESS PAGE
-                            ------------------------------------
-                            */
-
-
-                            window.location.href =
-                                "./success.html";
-
-                        },
-
-
-                    /*
-                    ============================================
-                    PENDING
-                    ============================================
-                    */
-
-
-                    onPending:
-                        function(result) {
-
-
-                            console.log(
-                                "PENDING:",
-                                result
-                            );
-
-
-                            statusText.textContent =
-                                "Pembayaran masih menunggu.";
-
-                        },
-
-
-                    /*
-                    ============================================
-                    ERROR
-                    ============================================
-                    */
-
-
-                    onError:
-                        function(result) {
-
-
-                            console.error(
-                                "ERROR:",
-                                result
-                            );
-
-
-                            statusText.textContent =
-                                "Pembayaran gagal.";
-
-
-                            alert(
-                                "Pembayaran gagal."
-                            );
-
-                        },
-
-
-                    /*
-                    ============================================
-                    CLOSE
-                    ============================================
-                    */
-
-
-                    onClose:
-                        function() {
-
-
-                            console.log(
-                                "Payment popup ditutup."
-                            );
-
-
-                            statusText.textContent =
-                                "Pembayaran ditutup.";
-
-                        }
-
-                }
-            );
-
-
-        }
-
-
-        catch (error) {
-
-
-            /*
-            ----------------------------------------------------
-            ERROR
-            ----------------------------------------------------
-            */
-
-
-            console.error(
-                "Payment Error:",
-                error
-            );
-
-
-            statusText.textContent =
-                "Pembayaran gagal dibuat.";
-
-
-            alert(
-                "Pembayaran gagal dibuat.\n\n" +
-                error.message
-            );
-
-        }
-
-
-        finally {
-
-
-            /*
-            ----------------------------------------------------
-            AKTIFKAN KEMBALI TOMBOL
-            ----------------------------------------------------
-            */
-
-
-            buyButton.disabled =
-                false;
-
-
-            buyButton.textContent =
-                "BELI SEKARANG";
-
-        }
-
-    }
-
-);
-
-</script>
-
-
 </body>
-
 </html>
