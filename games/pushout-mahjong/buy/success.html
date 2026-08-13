@@ -5,15 +5,11 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
-<title>Payment Successful - Pushout Mahjong</title>
+<title>Pembayaran Pushout Mahjong</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-}
 
 body {
     margin: 0;
@@ -23,21 +19,20 @@ body {
     justify-content: center;
     align-items: center;
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
 
     background:
-        linear-gradient(
-            135deg,
-            #111827,
-            #1e293b,
-            #0f172a
-        );
+    linear-gradient(
+        135deg,
+        #111827,
+        #1e293b,
+        #0f172a
+    );
 
     color: white;
 }
 
 .card {
-
     width: 90%;
     max-width: 520px;
 
@@ -48,65 +43,25 @@ body {
     border-radius: 20px;
 
     background:
-        rgba(255,255,255,0.08);
-
-    border:
-        1px solid
-        rgba(255,255,255,0.15);
-
-    box-shadow:
-        0 20px 50px
-        rgba(0,0,0,0.35);
+    rgba(255,255,255,0.08);
 }
 
-.success {
-
-    width: 80px;
-    height: 80px;
-
-    margin:
-        0 auto 25px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #22c55e;
-
-    font-size: 45px;
-    font-weight: bold;
+.icon {
+    font-size: 60px;
+    margin-bottom: 15px;
 }
 
 h1 {
-
-    margin:
-        0 0 15px;
-
-    font-size: 30px;
+    margin-bottom: 15px;
 }
 
-.game {
-
-    font-size: 22px;
-
-    font-weight: bold;
-
-    margin:
-        25px 0;
-}
-
-.message {
-
+#message {
     color: #cbd5e1;
-
     line-height: 1.6;
 }
 
 .download {
-
-    display: block;
+    display: none;
 
     margin-top: 30px;
 
@@ -125,34 +80,6 @@ h1 {
     font-weight: bold;
 }
 
-.download:hover {
-
-    opacity: 0.9;
-}
-
-.warning {
-
-    margin-top: 20px;
-
-    color: #94a3b8;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-}
-
-.back {
-
-    display: inline-block;
-
-    margin-top: 20px;
-
-    color: #94a3b8;
-
-    text-decoration: none;
-
-}
-
 </style>
 
 </head>
@@ -161,71 +88,186 @@ h1 {
 
 <div class="card">
 
-    <div class="success">
-        ✓
-    </div>
+<div class="icon" id="icon">
+⏳
+</div>
 
-    <h1>
-        Pembayaran Berhasil
-    </h1>
+<h1 id="title">
+Memeriksa Pembayaran
+</h1>
 
-    <div class="message">
+<div id="message">
+Mohon tunggu...
+</div>
 
-        Terima kasih telah membeli
-        game kami.
+<a
+id="download"
+class="download"
+href="#"
+target="_blank">
 
-        <br><br>
+DOWNLOAD GAME
 
-        Pesanan kamu untuk:
-
-    </div>
-
-    <div class="game">
-        Pushout Mahjong
-    </div>
-
-    <div class="message">
-
-        Pembayaran telah berhasil
-        diproses.
-
-    </div>
-
-    <!--
-    ============================================================
-    DOWNLOAD
-    ============================================================
-
-    JANGAN masukkan link game asli dulu.
-
-    Kita akan menghubungkan tombol ini
-    dengan sistem verifikasi pembayaran
-    setelahnya.
-    -->
-
-    <a
-        href="#"
-        class="download"
-        onclick="return false;"
-    >
-        DOWNLOAD GAME
-    </a>
-
-    <div class="warning">
-
-        Download akan tersedia setelah
-        sistem memverifikasi pembayaran.
-
-    </div>
-
-    <a
-        href="./"
-        class="back"
-    >
-        ← Kembali ke halaman pembelian
-    </a>
+</a>
 
 </div>
+
+
+<script>
+
+const WORKER_URL =
+"https://pushout-mahjong-payment.kokokayampagi.workers.dev";
+
+
+const orderId =
+sessionStorage.getItem(
+"pushout_order_id"
+);
+
+
+const accessToken =
+sessionStorage.getItem(
+"pushout_access_token"
+);
+
+
+const title =
+document.getElementById("title");
+
+
+const message =
+document.getElementById("message");
+
+
+const icon =
+document.getElementById("icon");
+
+
+const download =
+document.getElementById("download");
+
+
+async function verifyPayment() {
+
+    if (
+        !orderId ||
+        !accessToken
+    ) {
+
+        icon.textContent = "❌";
+
+        title.textContent =
+        "Transaksi Tidak Ditemukan";
+
+        message.textContent =
+        "Data transaksi tidak ditemukan.";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+        await fetch(
+            WORKER_URL +
+            "/verify?order_id=" +
+            encodeURIComponent(orderId) +
+            "&token=" +
+            encodeURIComponent(accessToken)
+        );
+
+
+        const data =
+        await response.json();
+
+
+        console.log(
+            "VERIFY:",
+            data
+        );
+
+
+        if (
+            data.success === true
+        ) {
+
+            icon.textContent =
+            "✓";
+
+            title.textContent =
+            "Pembayaran Berhasil";
+
+
+            message.textContent =
+            "Pembayaran Pushout Mahjong telah berhasil diverifikasi.";
+
+
+            /*
+            ====================================================
+            DOWNLOAD
+            ====================================================
+            
+            Untuk sementara mengambil URL dari Worker.
+            */
+
+            if (
+                data.download_url
+            ) {
+
+                download.href =
+                data.download_url;
+
+                download.style.display =
+                "block";
+
+            } else {
+
+                message.textContent +=
+                " File download belum dikonfigurasi.";
+
+            }
+
+            return;
+
+        }
+
+
+        icon.textContent =
+        "⏳";
+
+        title.textContent =
+        "Pembayaran Belum Berhasil";
+
+        message.textContent =
+        data.message ||
+        "Pembayaran belum berstatus berhasil.";
+
+    }
+
+
+    catch(error) {
+
+        console.error(error);
+
+        icon.textContent =
+        "❌";
+
+        title.textContent =
+        "Gagal Memeriksa Pembayaran";
+
+        message.textContent =
+        error.message;
+
+    }
+
+}
+
+
+verifyPayment();
+
+</script>
 
 </body>
 </html>
