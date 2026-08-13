@@ -208,26 +208,23 @@ async function verifyPayment() {
             ====================================================
             DOWNLOAD
             ====================================================
-            
-            Untuk sementara mengambil URL dari Worker.
+
+            File diambil dari GitHub Release privat lewat endpoint
+            /download di Worker. Setiap kali link ini diklik, Worker
+            akan memverifikasi ulang status pembayaran ke Midtrans
+            sebelum mengirim filenya, jadi link ini aman dibagikan
+            ulang tanpa bisa disalahgunakan orang yang belum bayar.
             */
 
-            if (
-                data.download_url
-            ) {
+            download.href =
+            WORKER_URL +
+            "/download?order_id=" +
+            encodeURIComponent(orderId) +
+            "&token=" +
+            encodeURIComponent(accessToken);
 
-                download.href =
-                data.download_url;
-
-                download.style.display =
-                "block";
-
-            } else {
-
-                message.textContent +=
-                " File download belum dikonfigurasi.";
-
-            }
+            download.style.display =
+            "block";
 
             return;
 
