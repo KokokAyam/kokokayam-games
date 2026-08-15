@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Buy Kwartet</title>
+
+<script
+src="https://app.midtrans.com/snap/snap.js"
+data-client-key="Mid-client-SEGPEe2msd-0yv5G">
+</script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111827,
+            #1e293b,
+            #0f172a
+        );
+
+    color: white;
+}
+
+.container {
+    width: 100%;
+    max-width: 520px;
+    padding: 25px;
+}
+
+.card {
+    padding: 40px 25px;
+    text-align: center;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.35);
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+.buy-button {
+    width: 100%;
+    padding: 16px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #22c55e;
+
+    color: white;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.buy-button:disabled {
+    opacity: 0.6;
+}
+
+#status {
+    margin-top: 20px;
+    color: #cbd5e1;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>
+Kwartet
+</h1>
+
+<div>
+HTML5 Game
+</div>
+
+<div class="price">
+Rp800.000
+</div>
+
+<button
+id="buyButton"
+class="buy-button">
+
+BELI SEKARANG
+
+</button>
+
+<div id="status"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const WORKER_URL =
+"https://pushout-mahjong-payment.kokokayampagi.workers.dev";
+
+const GAME_ID = "kwartet";
+
+
+const buyButton =
+document.getElementById("buyButton");
+
+
+const statusText =
+document.getElementById("status");
+
+
+buyButton.addEventListener(
+"click",
+async function() {
+
+    buyButton.disabled = true;
+
+    buyButton.textContent =
+    "MEMPROSES...";
+
+    statusText.textContent =
+    "Menghubungkan ke Midtrans...";
+
+
+    try {
+
+        const response =
+        await fetch(
+            WORKER_URL,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                    "application/json"
+                },
+
+                body: JSON.stringify({
+                    game_id:
+                    GAME_ID
+                })
+            }
+        );
+
+
+        const data =
+        await response.json();
+
+
+        console.log(
+            "Worker:",
+            data
+        );
+
+
+        if (
+            !response.ok ||
+            !data.token ||
+            !data.order_id ||
+            !data.access_token
+        ) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "Gagal membuat transaksi."
+            );
+
+        }
+
+
+        /*
+        ========================================================
+        SIMPAN ORDER ID DAN ACCESS TOKEN
+        ========================================================
+        */
+
+        sessionStorage.setItem(
+            "kwartet_order_id",
+            data.order_id
+        );
+
+
+        sessionStorage.setItem(
+            "kwartet_access_token",
+            data.access_token
+        );
+
+
+        /*
+        ========================================================
+        BUKA MIDTRANS
+        ========================================================
+        */
+
+        window.snap.pay(
+            data.token,
+            {
+
+                onSuccess:
+                function(result) {
+
+                    console.log(
+                        "SUCCESS",
+                        result
+                    );
+
+
+                    window.location.href =
+                    "./success.html";
+
+                },
+
+
+                onPending:
+                function(result) {
+
+                    console.log(
+                        "PENDING",
+                        result
+                    );
+
+                    statusText.textContent =
+                    "Pembayaran masih menunggu.";
+
+                    buyButton.disabled =
+                    false;
+
+                    buyButton.textContent =
+                    "BELI SEKARANG";
+
+                },
+
+
+                onError:
+                function(result) {
+
+                    console.log(
+                        "ERROR",
+                        result
+                    );
+
+                    alert(
+                        "Pembayaran gagal."
+                    );
+
+                    buyButton.disabled =
+                    false;
+
+                    buyButton.textContent =
+                    "BELI SEKARANG";
+
+                },
+
+
+                onClose:
+                function() {
+
+                    statusText.textContent =
+                    "Pembayaran dibatalkan.";
+
+                    buyButton.disabled =
+                    false;
+
+                    buyButton.textContent =
+                    "BELI SEKARANG";
+
+                }
+
+            }
+        );
+
+
+    } catch(error) {
+
+        console.error(error);
+
+        alert(
+            "Gagal membuat pembayaran:\n\n" +
+            error.message
+        );
+
+        buyButton.disabled =
+        false;
+
+        buyButton.textContent =
+        "BELI SEKARANG";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
