@@ -143,6 +143,8 @@ BELI SEKARANG
 const WORKER_URL =
 "https://pushout-mahjong-payment.kokokayampagi.workers.dev";
 
+const GAME_ID = "pushout-mahjong";
+
 
 const buyButton =
 document.getElementById("buyButton");
@@ -179,11 +181,8 @@ async function() {
                 },
 
                 body: JSON.stringify({
-                    product:
-                    "Pushout Mahjong",
-
-                    amount:
-                    300000
+                    game_id:
+                    GAME_ID
                 })
             }
         );
