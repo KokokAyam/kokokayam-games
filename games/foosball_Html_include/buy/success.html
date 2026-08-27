@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Pembayaran Foosball</title>
+
+<style>
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background:
+    linear-gradient(
+        135deg,
+        #111827,
+        #1e293b,
+        #0f172a
+    );
+
+    color: white;
+}
+
+.card {
+    width: 90%;
+    max-width: 520px;
+
+    padding: 40px 25px;
+
+    text-align: center;
+
+    border-radius: 20px;
+
+    background:
+    rgba(255,255,255,0.08);
+}
+
+.icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+#message {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.download {
+    display: none;
+
+    margin-top: 30px;
+
+    padding: 16px;
+
+    border-radius: 12px;
+
+    background: #22c55e;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="icon" id="icon">
+⏳
+</div>
+
+<h1 id="title">
+Memeriksa Pembayaran
+</h1>
+
+<div id="message">
+Mohon tunggu...
+</div>
+
+<a
+id="download"
+class="download"
+href="#"
+target="_blank">
+
+DOWNLOAD GAME
+
+</a>
+
+</div>
+
+
+<script>
+
+const WORKER_URL =
+"https://pushout-mahjong-payment.kokokayampagi.workers.dev";
+
+
+const orderId =
+sessionStorage.getItem(
+"foosball_order_id"
+);
+
+
+const accessToken =
+sessionStorage.getItem(
+"foosball_access_token"
+);
+
+
+const title =
+document.getElementById("title");
+
+
+const message =
+document.getElementById("message");
+
+
+const icon =
+document.getElementById("icon");
+
+
+const download =
+document.getElementById("download");
+
+
+async function verifyPayment() {
+
+    if (
+        !orderId ||
+        !accessToken
+    ) {
+
+        icon.textContent = "❌";
+
+        title.textContent =
+        "Transaksi Tidak Ditemukan";
+
+        message.textContent =
+        "Data transaksi tidak ditemukan.";
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+        await fetch(
+            WORKER_URL +
+            "/verify?order_id=" +
+            encodeURIComponent(orderId) +
+            "&token=" +
+            encodeURIComponent(accessToken)
+        );
+
+
+        const data =
+        await response.json();
+
+
+        console.log(
+            "VERIFY:",
+            data
+        );
+
+
+        if (
+            data.success === true
+        ) {
+
+            icon.textContent =
+            "✓";
+
+            title.textContent =
+            "Pembayaran Berhasil";
+
+
+            message.textContent =
+            "Pembayaran Foosball telah berhasil diverifikasi.";
+
+
+            /*
+            ====================================================
+            DOWNLOAD
+            ====================================================
+
+            File diambil dari GitHub Release privat lewat endpoint
+            /download di Worker. Setiap kali link ini diklik, Worker
+            akan memverifikasi ulang status pembayaran ke Midtrans
+            sebelum mengirim filenya, jadi link ini aman dibagikan
+            ulang tanpa bisa disalahgunakan orang yang belum bayar.
+            */
+
+            download.href =
+            WORKER_URL +
+            "/download?order_id=" +
+            encodeURIComponent(orderId) +
+            "&token=" +
+            encodeURIComponent(accessToken);
+
+            download.style.display =
+            "block";
+
+            return;
+
+        }
+
+
+        icon.textContent =
+        "⏳";
+
+        title.textContent =
+        "Pembayaran Belum Berhasil";
+
+        message.textContent =
+        data.message ||
+        "Pembayaran belum berstatus berhasil.";
+
+    }
+
+
+    catch(error) {
+
+        console.error(error);
+
+        icon.textContent =
+        "❌";
+
+        title.textContent =
+        "Gagal Memeriksa Pembayaran";
+
+        message.textContent =
+        error.message;
+
+    }
+
+}
+
+
+verifyPayment();
+
+</script>
+
+</body>
+</html>
